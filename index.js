@@ -2,7 +2,7 @@
 'use strict';
 
 var Handlebars = require('handlebars');
-var handlebarsInlinePrecompilePlugin = require('./lib/handlebars-inline-precompile-plugin');
+var HandlebarsInlinePrecompilePlugin = require('./lib/handlebars-inline-precompile-plugin');
 
 module.exports = {
   name: 'ember-cli-handlebars-inline-precompile',
@@ -14,18 +14,13 @@ module.exports = {
     app.options.babel = app.options.babel || {};
     app.options.babel.plugins = app.options.babel.plugins || [];
 
-    handlebarsInlinePrecompilePlugin(Handlebars.precompile);
+    HandlebarsInlinePrecompilePlugin(Handlebars.precompile);
 
     // add the HandlebarsInlinePrecompilePlugin to the list of plugins used by
     // the `ember-cli-babel` addon
     if (!this._registeredWithBabel) {
-      app.options.babel.plugins.push(handlebarsInlinePrecompilePlugin);
+      app.options.babel.plugins.push(HandlebarsInlinePrecompilePlugin);
       this._registeredWithBabel = true;
     }
-  },
-
-  // borrowed from ember-cli-htmlbars http://git.io/vJDrW
-  projectConfig: function () {
-    return this.project.config(process.env.EMBER_ENV);
   }
 };
