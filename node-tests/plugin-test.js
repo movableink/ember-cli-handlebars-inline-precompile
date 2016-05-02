@@ -38,7 +38,7 @@ describe("handlebars-inline-precompile", function() {
       return "precompiled(" + template + ")";
     });
 
-    assert.equal(transformed, "var compiled = precompiled(hello);", "tagged template is replaced");
+    assert.equal(transformed, "var compiled = Handlebars.instance.template(precompiled(hello));", "tagged template is replaced");
   });
 
   it("doesn't replace unrelated tagged template strings", function() {
@@ -65,7 +65,7 @@ describe("handlebars-inline-precompile", function() {
         return "precompiled(" + template + ")";
       });
 
-      assert.equal(transformed, "var compiled = precompiled(hello);", "tagged template is replaced");
+      assert.equal(transformed, "var compiled = Handlebars.instance.template(precompiled(hello));", "tagged template is replaced");
     });
 
     it("warns when more than one argument is passed", function() {

@@ -22,5 +22,8 @@ module.exports = {
       app.options.babel.plugins.push(PrecompileInlineHandlebarsPlugin);
       this._registeredWithBabel = true;
     }
+
+    app.import('bower_components/handlebars/handlebars.runtime.js');
+    app.import('vendor/handlebars-shim.js');
   }
 };
