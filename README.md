@@ -1,6 +1,6 @@
-# Ember-cli-handlebars-inline-precompile
+# ember-cli-handlebars-inline-precompile
 
-This README outlines the details of collaborating on this Ember addon.
+Used for precompiling static Handlebar templates for use in generating templates. This is **not** intended for use in Ember's rendering engine!
 
 ## Installation
 
