@@ -14,12 +14,12 @@ module.exports = {
     app.options.babel = app.options.babel || {};
     app.options.babel.plugins = app.options.babel.plugins || [];
 
-    HandlebarsInlinePrecompilePlugin(Handlebars.precompile);
+    var PrecompileInlineHandlebarsPlugin = HandlebarsInlinePrecompilePlugin(Handlebars.precompile);
 
     // add the HandlebarsInlinePrecompilePlugin to the list of plugins used by
     // the `ember-cli-babel` addon
     if (!this._registeredWithBabel) {
-      app.options.babel.plugins.push(HandlebarsInlinePrecompilePlugin);
+      app.options.babel.plugins.push(PrecompileInlineHandlebarsPlugin);
       this._registeredWithBabel = true;
     }
   }
