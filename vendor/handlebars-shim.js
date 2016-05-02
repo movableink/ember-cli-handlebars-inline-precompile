@@ -1,4 +1,4 @@
 Handlebars.instance = Handlebars.create();
-Handlebars.instance.helpers.get = function (property) {
-  return require('ember-metal/get')['default'](this, property);
+Handlebars.instance.helpers.lookup = function (object, property) {
+  return object && require('ember-metal/get')['default'](object, property);
 };
