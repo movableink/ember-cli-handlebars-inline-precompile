@@ -11,7 +11,7 @@ test('handlebars are a function', function (assert) {
 });
 
 test('templates understand computed properties using lookup', function (assert) {
-  let template = hbs`Hello, {{lookup this "name"}}`;
+  let template = hbs`Hello, {{name}}`;
 
   assert.equal(template(Ember.Object.extend({
     name: Ember.computed({
