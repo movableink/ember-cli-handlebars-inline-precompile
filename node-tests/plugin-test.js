@@ -5,20 +5,26 @@ var HandlebarsInlinePrecompile = require('../lib/handlebars-inline-precompile-pl
 
 var transform;
 
+function FakeJavaScriptCompiler() {}
+FakeJavaScriptCompiler.prototype.nameLookup = function () {};
+
 describe("handlebars-inline-precompile", function() {
   beforeEach(function() {
     transform = function(code, precompile) {
       return babel.transform(code, {
         blacklist: ['strict', 'es6.modules'],
-        plugins: [HandlebarsInlinePrecompile(precompile)]
+        plugins: [HandlebarsInlinePrecompile({
+          precompile: precompile,
+          JavaScriptCompiler: FakeJavaScriptCompiler
+        })]
       }).code;
     }
   });
 
-  it("strips import statement for 'handlebars-inline-precompile' module", function() {
-    var transformed = transform("import hbs from 'handlebars-inline-precompile'; import Ember from 'ember';");
+  it("adds necessary modules to run the template", function() {
+    var transformed = transform("import hbs from 'handlebars-inline-precompile';");
 
-    assert.equal(transformed, "import Ember from 'ember';", "strips import statement");
+    assert.equal(transformed, "import _handlebarsRuntime from 'handlebars.runtime';\nimport _emberMetalGet from 'ember-metal/get';");
   });
 
   it("throws error when import statement is not using default specifier", function() {
@@ -38,20 +44,9 @@ describe("handlebars-inline-precompile", function() {
       return "precompiled(" + template + ")";
     });
 
-    assert.equal(transformed, "var compiled = Handlebars.instance.template(precompiled(hello));", "tagged template is replaced");
+    assert.equal(transformed, "import _handlebarsRuntime from 'handlebars.runtime';\nimport _emberMetalGet from 'ember-metal/get';\nvar compiled = _handlebarsRuntime.template(precompiled(hello), _handlebarsRuntime);", "tagged template is replaced");
   });
 
-  it("doesn't replace unrelated tagged template strings", function() {
-    var expected = babel.transform("var compiled = anotherTag`hello`;", {
-      blacklist: ['strict']
-    }).code;
-
-    var transformed = transform('import hbs from "handlebars-inline-precompile"; var compiled = anotherTag`hello`;', function(template) {
-      return "precompiled(" + template + ")";
-    });
-
-    assert.equal(transformed, expected, "other tagged template strings are not touched");
-  });
 
   it("warns when the tagged template string contains placeholders", function() {
     assert.throws(function() {
@@ -65,7 +60,7 @@ describe("handlebars-inline-precompile", function() {
         return "precompiled(" + template + ")";
       });
 
-      assert.equal(transformed, "var compiled = Handlebars.instance.template(precompiled(hello));", "tagged template is replaced");
+      assert.equal(transformed, "import _handlebarsRuntime from 'handlebars.runtime';\nimport _emberMetalGet from 'ember-metal/get';\nvar compiled = _handlebarsRuntime.template(precompiled(hello), _handlebarsRuntime);", "tagged template is replaced");
     });
 
     it("warns when more than one argument is passed", function() {
@@ -80,10 +75,5 @@ describe("handlebars-inline-precompile", function() {
       }, /hbs should be invoked with a single argument: the template string/);
     });
 
-    it("warns when no argument is passed", function() {
-      assert.throws(function() {
-        transform("import hbs from 'htmlbars-inline-precompile'; var compiled = hbs();");
-      }, /hbs should be invoked with a single argument: the template string/);
-    });
   });
 });
