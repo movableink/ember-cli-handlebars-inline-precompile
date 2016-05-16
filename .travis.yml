@@ -16,6 +16,7 @@ before_install:
 
 install:
   - npm install -g bower
+  - npm install -g mocha
   - npm install
   - bower install
 
