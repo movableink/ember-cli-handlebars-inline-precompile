@@ -21,3 +21,17 @@ test('templates understand computed properties using lookup', function (assert) 
     })
   }).create()), 'Hello, world');
 });
+
+test('property paths are gettable', function (assert) {
+  let template = hbs`<h1 style="font-size: {{styles.fontSize}}px">Hello!</h1>`;
+
+  assert.equal(template(Ember.Object.extend({
+    styles: Ember.computed({
+      get() {
+        return {
+          fontSize: 12
+        };
+      }
+    })
+  }).create()), '<h1 style="font-size: 12px">Hello!</h1>');
+});
