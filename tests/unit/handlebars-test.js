@@ -35,3 +35,19 @@ test('property paths are gettable', function (assert) {
     })
   }).create()), '<h1 style="font-size: 12px">Hello!</h1>');
 });
+
+test('property paths in an {{each}} are gettable', function (assert) {
+  let template = hbs`{{#each cats as |cat|}}{{cat.name}} {{/each}}`;
+
+  let Cat = Ember.Object.extend();
+  assert.equal(template(Ember.Object.extend({
+    cats: Ember.computed({
+      get() {
+        return [
+          Cat.create({ name: 'Mister Fussyboots' }),
+          Cat.create({ name: 'Missus Sassypants' })
+        ];
+      }
+    })
+  }).create()), 'Mister Fussyboots Missus Sassypants ');
+});
