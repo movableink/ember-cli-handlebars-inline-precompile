@@ -44,7 +44,7 @@ describe("handlebars-inline-precompile", function() {
       return "precompiled(" + template + ")";
     });
 
-    assert.equal(transformed, "import _handlebarsRuntime from 'handlebars.runtime';\nimport _emberMetalGet from 'ember-metal/get';\nvar compiled = _handlebarsRuntime.template(precompiled(hello), _handlebarsRuntime);", "tagged template is replaced");
+    assert.equal(transformed, "import _handlebarsRuntime from 'handlebars.runtime';\nimport _emberMetalGet from 'ember-metal/get';\nvar compiled = _handlebarsRuntime.template(precompiled(hello));", "tagged template is replaced");
   });
 
 
@@ -60,7 +60,7 @@ describe("handlebars-inline-precompile", function() {
         return "precompiled(" + template + ")";
       });
 
-      assert.equal(transformed, "import _handlebarsRuntime from 'handlebars.runtime';\nimport _emberMetalGet from 'ember-metal/get';\nvar compiled = _handlebarsRuntime.template(precompiled(hello), _handlebarsRuntime);", "tagged template is replaced");
+      assert.equal(transformed, "import _handlebarsRuntime from 'handlebars.runtime';\nimport _emberMetalGet from 'ember-metal/get';\nvar compiled = _handlebarsRuntime.template(precompiled(hello));", "tagged template is replaced");
     });
 
     it("warns when more than one argument is passed", function() {
