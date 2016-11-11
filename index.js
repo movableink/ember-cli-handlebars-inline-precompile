@@ -17,7 +17,11 @@ module.exports = {
     // add the HandlebarsInlinePrecompilePlugin to the list of plugins used by
     // the `ember-cli-babel` addon
     if (!this._registeredWithBabel) {
-      app.options.babel.plugins.push(new HandlebarsInlinePrecompilePlugin(Handlebars));
+      let fn = new HandlebarsInlinePrecompilePlugin(Handlebars);
+      fn.baseDir = function() {
+        return __dirname;
+      }
+      app.options.babel.plugins.push(fn);
       this._registeredWithBabel = true;
     }
 
