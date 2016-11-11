@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-handlebars-inline-precompile",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Compile handlebars templates for use in Ember apps. These templates are for generating static HTML",
   "directories": {
     "doc": "doc",
