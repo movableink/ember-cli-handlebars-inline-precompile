@@ -2,6 +2,8 @@
 
 Used for precompiling static Handlebar templates for use in generating templates. This is **not** intended for use in Ember's rendering engine!
 
+*** If you want a Babel 6 compatible version, use the latest commit on the `ember2-14` branch ***
+
 ## Usage
 
 This addon will transpile tagged templates into Handlebars templates. From there, these templates can be invoked as a function with a context, just like any other Handlebars template.
