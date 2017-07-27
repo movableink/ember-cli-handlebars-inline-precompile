@@ -2,7 +2,7 @@
 
 Used for precompiling static Handlebar templates for use in generating templates. This is **not** intended for use in Ember's rendering engine!
 
-*** If you want a Babel 6 compatible version, use the latest commit on the `ember2-14` branch ***
+**If you want a Babel 6 compatible version, use the latest commit on the `ember2-14` branch**
 
 ## Usage
 
