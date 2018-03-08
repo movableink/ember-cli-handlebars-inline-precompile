@@ -3,6 +3,9 @@
 
 var Handlebars = require('handlebars');
 var HandlebarsInlinePrecompilePlugin = require('./lib/handlebars-inline-precompile-plugin');
+var path = require('path');
+var Funnel = require('broccoli-funnel');
+var MergeTrees = require('broccoli-merge-trees');
 
 module.exports = {
   name: 'ember-cli-handlebars-inline-precompile',
@@ -24,7 +27,17 @@ module.exports = {
       app.options.babel.plugins.push(fn);
       this._registeredWithBabel = true;
     }
+  },
 
-    app.import('bower_components/handlebars/handlebars.runtime.amd.js');
+  treeForAddon: function() {
+    var addonTree = this._super.treeForAddon.apply(this, arguments);
+
+    var dir = path.resolve(require.resolve('handlebars'), '..', '..');
+
+    var handlebars = new Funnel(dir, {
+      files: ['dist/handlebars.runtime.amd.js']
+    });
+
+    return new MergeTrees([addonTree, handlebars]);
   }
 };

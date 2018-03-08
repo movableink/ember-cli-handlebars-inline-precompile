@@ -1,6 +1,0 @@
-{
-  "name": "ember-cli-handlebars-inline-precompile",
-  "dependencies": {
-    "handlebars": "~4.0.5"
-  }
-}

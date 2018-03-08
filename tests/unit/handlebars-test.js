@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import EmObject from '@ember/object';
+import { computed } from '@ember/object';
 import hbs from 'handlebars-inline-precompile';
 import { module, test } from 'qunit';
 
@@ -13,8 +14,8 @@ test('handlebars are a function', function (assert) {
 test('templates understand computed properties using lookup', function (assert) {
   let template = hbs`Hello, {{name}}`;
 
-  assert.equal(template(Ember.Object.extend({
-    name: Ember.computed({
+  assert.equal(template(EmObject.extend({
+    name: computed({
       get() {
         return 'world';
       }
@@ -25,8 +26,8 @@ test('templates understand computed properties using lookup', function (assert) 
 test('property paths are gettable', function (assert) {
   let template = hbs`<h1 style="font-size: {{styles.fontSize}}px">Hello!</h1>`;
 
-  assert.equal(template(Ember.Object.extend({
-    styles: Ember.computed({
+  assert.equal(template(EmObject.extend({
+    styles: computed({
       get() {
         return {
           fontSize: 12
@@ -39,9 +40,9 @@ test('property paths are gettable', function (assert) {
 test('property paths in an {{each}} are gettable', function (assert) {
   let template = hbs`{{#each cats as |cat|}}{{cat.name}} {{/each}}`;
 
-  let Cat = Ember.Object.extend();
-  assert.equal(template(Ember.Object.extend({
-    cats: Ember.computed({
+  let Cat = EmObject.extend();
+  assert.equal(template(EmObject.extend({
+    cats: computed({
       get() {
         return [
           Cat.create({ name: 'Mister Fussyboots' }),
